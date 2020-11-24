@@ -7,6 +7,8 @@ import random
 import numpy as np
 import cv2 as cv
 
+green = [0,255,0]
+red = [255,0,0]
 # creating the list of random values for the food
 a = []
 b = []
@@ -24,8 +26,21 @@ dis = pygame.display.set_mode((500,500))
 
 pygame.display.set_caption("Find The Food")
 
-white = [255,255,255]
+img = pygame.image.load('intro.png')
+dis.blit(img, (10,100))
+font = pygame.font.Font('freesansbold.ttf', 40)
 
+
+text = font.render('Start', True, green, red)
+
+textRect = text.get_rect()  
+textRect.center = (190, 35)
+
+dis.blit(text, textRect)
+
+pygame.display.update()
+
+white = [255,255,255]
 green = (0, 255, 0) 
 blue = (0, 0, 128)
 
@@ -44,20 +59,8 @@ textRect.center = (350, 15)
 textrect = text2.get_rect()
 textrect.center = (150,50)
 
-
-
-dis.fill(white)
-
 x = 100
 y = 100
-
-# player
-
-pygame.draw.rect(dis, [0, 255, 0], [x,y,10,10])
-
-# food
-pygame.draw.circle(dis, [255,0,0],[500,500], 5, 0)
-
 
 pygame.display.update()
 
@@ -182,5 +185,15 @@ def mainloop(run, x, y, px, py):
     cam.release()
     pygame.quit()
 
+game = True
 
-mainloop(True, 100,100,205,205)
+while game:
+    x, y = pygame.mouse.get_pos()
+    
+
+    for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if x <= 300 and x >= 110 and y <= 60 and y >= 10:
+                dis.fill([255,255,255])
+                pygame.display.update()
+                mainloop(True, 100, 100, 205, 205)
